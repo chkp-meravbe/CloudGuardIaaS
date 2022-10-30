@@ -68,6 +68,10 @@ fi
 
 
 echo "Starting First Time Wizard"
+if [ "${cluster_new_config}" = "1" ]; then
+  file_name="/etc/.blink_cloud_mode"
+  > file_name
+fi
 blink_config -s "gateway_cluster_member=true&ftw_sic_key='${SICKey}'&upload_info=${AllowUploadDownload}&download_info=${AllowUploadDownload}&admin_hash='$pwd_hash'"
 
 

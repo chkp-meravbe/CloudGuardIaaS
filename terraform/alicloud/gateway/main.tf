@@ -32,6 +32,7 @@ module "common_gateway_instance" {
   allow_upload_download = var.allow_upload_download
   primary_ntp = var.primary_ntp
   secondary_ntp = var.secondary_ntp
+  gateway_version = var.gateway_version
 }
 
 resource "alicloud_network_interface" "internal_eni" {

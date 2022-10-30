@@ -21,5 +21,6 @@ resource "alicloud_instance" "gateway_instance" {
     AllowUploadDownload = var.allow_upload_download,
     NTPPrimary = var.primary_ntp,
     NTPSecondary = var.secondary_ntp,
+    gw_new_config = local.gw_new_config
   })
 }
