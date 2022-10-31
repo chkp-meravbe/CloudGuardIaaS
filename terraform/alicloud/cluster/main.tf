@@ -38,7 +38,8 @@ resource "alicloud_instance" "member-a-instance" {
     Shell = var.admin_shell,
     GatewayBootstrapScript = var.gateway_bootstrap_script,
     SICKey = var.gateway_SICKey,
-    ManagementIpAddress = var.management_ip_address
+    ManagementIpAddress = var.management_ip_address,
+    cluster_new_config = local.cluster_new_config
   })
 }
 resource "alicloud_instance" "member-b-instance" {
