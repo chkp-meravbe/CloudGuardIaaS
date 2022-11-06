@@ -23,6 +23,7 @@ resource "alicloud_instance" "member-a-instance" {
   security_groups = [
     module.common_permissive_sg.permissive_sg_id]
   system_disk_size = var.volume_size
+  system_disk_category = var.disk_category
 
   tags = merge({
     Name = format("%s-Member-A", var.gateway_name)
@@ -51,6 +52,7 @@ resource "alicloud_instance" "member-b-instance" {
   security_groups = [
     module.common_permissive_sg.permissive_sg_id]
   system_disk_size = var.volume_size
+  system_disk_category = var.disk_category
 
   tags = merge({
     Name = format("%s-Member-B", var.gateway_name)
