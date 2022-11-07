@@ -16,7 +16,12 @@ locals {
     "ecs.g6e.xlarge",
     "ecs.g6e.2xlarge",
     "ecs.g6e.4xlarge",
-    "ecs.g6e.8xlarge"
+    "ecs.g6e.8xlarge",
+    "ecs.g7.large",
+    "ecs.g7.xlarge",
+    "ecs.g7.2xlarge",
+    "ecs.g7.4xlarge",
+    "ecs.g7.8xlarge"
   ]
 }
 
