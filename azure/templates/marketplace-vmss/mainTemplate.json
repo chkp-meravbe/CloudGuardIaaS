@@ -19,9 +19,6 @@
     "cloudGuardVersion": {
       "type": "string",
       "allowedValues": [
-        "R80.30 - Bring Your Own License",
-        "R80.30 - Pay As You Go (NGTP)",
-        "R80.30 - Pay As You Go (NGTX)",
         "R80.40 - Bring Your Own License",
         "R80.40 - Pay As You Go (NGTP)",
         "R80.40 - Pay As You Go (NGTX)",
@@ -30,7 +27,10 @@
         "R81 - Pay As You Go (NGTX)",
         "R81.10 - Bring Your Own License",
         "R81.10 - Pay As You Go (NGTP)",
-        "R81.10 - Pay As You Go (NGTX)"
+        "R81.10 - Pay As You Go (NGTX)",
+        "R81.20 - Bring Your Own License",
+        "R81.20 - Pay As You Go (NGTP)",
+        "R81.20 - Pay As You Go (NGTX)"
       ],
       "defaultValue": "R81.10 - Bring Your Own License",
       "metadata": {
@@ -480,12 +480,9 @@
     "resourceGroup": "[resourceGroup()]",
     "resourceGroupName": "[resourceGroup().name]",
     "templateName": "vmss-v2",
-    "templateVersion": "20220512",
+    "templateVersion": "20221123",
     "location": "[parameters('location')]",
     "offers": {
-      "R80.30 - Bring Your Own License": "BYOL",
-      "R80.30 - Pay As You Go (NGTP)": "NGTP-V2",
-      "R80.30 - Pay As You Go (NGTX)": "NGTX-V2",
       "R80.40 - Bring Your Own License": "BYOL",
       "R80.40 - Pay As You Go (NGTP)": "NGTP",
       "R80.40 - Pay As You Go (NGTX)": "NGTX",
@@ -494,13 +491,13 @@
       "R81 - Pay As You Go (NGTX)": "NGTX",
       "R81.10 - Bring Your Own License": "BYOL",
       "R81.10 - Pay As You Go (NGTP)": "NGTP",
-      "R81.10 - Pay As You Go (NGTX)": "NGTX"
+      "R81.10 - Pay As You Go (NGTX)": "NGTX",
+      "R81.20 - Bring Your Own License": "BYOL",
+      "R81.20 - Pay As You Go (NGTP)": "NGTP",
+      "R81.20 - Pay As You Go (NGTX)": "NGTX"
     },
     "offer": "[variables('offers')[parameters('cloudGuardVersion')]]",
     "osVersions": {
-      "R80.30 - Bring Your Own License": "R8030",
-      "R80.30 - Pay As You Go (NGTP)": "R8030",
-      "R80.30 - Pay As You Go (NGTX)": "R8030",
       "R80.40 - Bring Your Own License": "R8040",
       "R80.40 - Pay As You Go (NGTP)": "R8040",
       "R80.40 - Pay As You Go (NGTX)": "R8040",
@@ -509,10 +506,12 @@
       "R81 - Pay As You Go (NGTX)": "R81",
       "R81.10 - Bring Your Own License": "R8110",
       "R81.10 - Pay As You Go (NGTP)": "R8110",
-      "R81.10 - Pay As You Go (NGTX)": "R8110"
+      "R81.10 - Pay As You Go (NGTX)": "R8110",
+      "R81.20 - Bring Your Own License": "R8120",
+      "R81.20 - Pay As You Go (NGTP)": "R8120",
+      "R81.20 - Pay As You Go (NGTX)": "R8120"
     },
     "osVersion": "[variables('osVersions')[parameters('cloudGuardVersion')]]",
-    "adminUsername": "notused",
     "isBlink": true,
     "subnet2Name": "[parameters('subnet2Name')]",
     "storageAccountName": "[concat('bootdiag', uniqueString(variables('resourceGroup').id, deployment().name))]",
@@ -970,7 +969,7 @@
           },
           "osProfile": {
             "adminPassword": "[parameters('adminPassword')]",
-            "adminUsername": "[variables('adminUsername')]",
+            "adminUsername": "[concat('not','used')]",
             "computerNamePrefix": "[toLower(parameters('vmName'))]",
             "customData": "[base64(concat(variables('customData'), '\n', 'vnet=\"', if(equals(parameters('vnetNewOrExisting'), 'new'), reference('networkNewSetup').outputs.vnetAddressPrefixes.value[0], reference('networkExistingSetup').outputs.vnetAddressPrefixes.value[0]), '\"', '\n' ))]",
             "linuxConfiguration": "[variables('linuxConfiguration')]"
