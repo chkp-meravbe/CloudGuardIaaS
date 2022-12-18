@@ -160,6 +160,7 @@ secret_key = "my-secret-key"
 | autoscale_autoscale_security_group_id          | The deployed AutoScaling Group's security group id                |
 | autoscale_iam_role_name                        | The deployed AutoScaling Group's IAM role name (if created)       |
 
+
 ## Revision History
 In order to check the template version, please refer to [sk116585](https://supportcenter.checkpoint.com/supportcenter/portal?eventSubmit_doGoviewsolutiondetails=&solutionid=sk116585)
 
@@ -167,7 +168,8 @@ In order to check the template version, please refer to [sk116585](https://suppo
 |------------------|-------------------------------------------------------------------------|
 | 20220414         | First release of Check Point Auto Scaling GWLB Terraform module for AWS |
 | 20220606         | New instance type support                                               |
-| 20221123         | R81.20 version support                                                  |
+| 20221123         | R81.20 version support    
+| 20221215         | Support ASG Launch Template instead of Launch Configuration 
 
 
 
