@@ -28,7 +28,6 @@ resource "alicloud_instance" "member-a-instance" {
   tags = merge({
     Name = format("%s-Member-A", var.gateway_name)
   }, var.instance_tags)
-
   user_data = templatefile("${path.module}/cluster_member_user_data.sh", {
     // script's arguments
     Hostname = format("%s-member-a", var.gateway_hostname),
