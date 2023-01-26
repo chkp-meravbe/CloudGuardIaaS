@@ -30,22 +30,18 @@ hex_cluster_ip=$(printf '%02X' $oct1 $oct2 $oct3 $oct4)
 HEX_IP_ADDR_LOWER="$(echo $hex_cluster_ip | tr '[A-Z]' '[a-z]')"
 echo "aws_cross_az_private_member_ip=0x$HEX_IP_ADDR_LOWER" >> $FWDIR/boot/modules/fwkern.conf
 
-echo "Set admin password"
 
 echo "Set admin password"
 pwd_hash='${PasswordHash}'
 if [[ -n $pwd_hash ]]; then
-  clish -s -c "lock database override"
   clish -c "set user admin password-hash $pwd_hash" -s
 else
   echo "Generating random password hash"
   pwd_hash="$(dd if=/dev/urandom count=1 2>/dev/null | sha1sum | cut -c -28)"
-  clish -s -c "lock database override"
   clish -c "set user admin password-hash $pwd_hash" -s
 fi
 
 echo "Configuring user admin shell to ${Shell}"
-clish -s -c "lock database override"
 clish -c "set user admin shell ${Shell}" -s
 
 ntp1=${NTPPrimary}
@@ -53,11 +49,9 @@ ntp2=${NTPSecondary}
 
 if [[ -n $ntp1 ]]; then
   echo "Setting primary NTP server to $ntp1"
-  clish -s -c "lock database override"
   clish -c "set ntp server primary $ntp1 version 4" -s
   if [[ -n $ntp2 ]]; then
     echo "Setting secondary NTP server to $ntp2"
-    clish -s -c "lock database override"
     clish -c "set ntp server secondary $ntp2 version 4" -s
   fi
 fi
@@ -66,7 +60,6 @@ fi
 hostname=${Hostname}
 if [[ -n "${Hostname}" ]]; then
   echo "Setting hostname to $hostname"
-  clish -s -c "lock database override"
   clish -c "set hostname $hostname" -s
 fi
 
@@ -81,13 +74,11 @@ if [[ -n $mgmt_ip_addr ]]; then
   eth1_nexthop_ip=$(echo $eth1_bc_ip | sed 's|\(.*\)\..*|\1\.|')$new_last_octet
 
   echo "Setting static-route to $mgmt_ip_addr via eth1"
-  clish -s -c "lock database override"
   clish -c "set static-route $mgmt_ip_addr/32 nexthop gateway address $eth1_nexthop_ip on" -s
 fi
 
 
 echo "Starting First Time Wizard"
-clish -s -c "lock database override"
 if [ "${cluster_new_config}" = "1" ]; then
   file_name="/etc/.blink_cloud_mode"
   > file_name
@@ -97,11 +88,9 @@ blink_config -s "gateway_cluster_member=true&ftw_sic_key='${SICKey}'&upload_info
 
 echo "Setting LocalGatewayExternal dynamic object"
 addr_ex="$(ip addr show dev eth0 | awk '/inet/{print $2; exit}' | cut -d / -f 1)"
-clish -s -c "lock database override"
 dynamic_objects -n LocalGatewayExternal -r "$addr_ex" "$addr_ex" -a || true
 echo "Setting LocalGatewayInternal dynamic object"
 addr_int="$(ip addr show dev eth2 | awk '/inet/{print $2; exit}' | cut -d / -f 1)"
-clish -s -c "lock database override"
 dynamic_objects -n LocalGatewayInternal -r "$addr_int" "$addr_int" -a || true
 
 if [[ -n "${GatewayBootstrapScript}" ]]; then
