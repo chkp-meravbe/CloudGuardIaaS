@@ -29,7 +29,6 @@ oct4=$(echo $ip | tr "." " " | awk '{ print $4 }')
 hex_cluster_ip=$(printf '%02X' $oct1 $oct2 $oct3 $oct4)
 HEX_IP_ADDR_LOWER="$(echo $hex_cluster_ip | tr '[A-Z]' '[a-z]')"
 echo "aws_cross_az_private_member_ip=0x$HEX_IP_ADDR_LOWER" >> $FWDIR/boot/modules/fwkern.conf
-echo "vpn_check_interfaces_groups=1" >> $FWDIR/boot/modules/fwkern.conf
 
 echo "Set admin password"
 pwd_hash='${PasswordHash}'
